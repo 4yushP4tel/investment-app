@@ -7,7 +7,9 @@ import plotly.express as px
 import streamlit as st
 from typing import  List
 from st_aggrid import AgGrid
-from ai_model import get_yfinance_data
+from main import get_yfinance_data
+
+st.title("Asset Visualizer")
 
 wanted_symbols = ["AAPL", "MSFT", "NVDA", "META", "TSLA", "^GSPC", "BTC-USD","ETH-USD", "SOL-USD"]
 symbol_data_dict = get_yfinance_data(wanted_symbols)

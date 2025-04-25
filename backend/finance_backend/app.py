@@ -2,6 +2,9 @@ from typing import List
 import streamlit as st
 import yfinance as yf
 
+WANTED_SYMBOLS = ["AAPL", "MSFT", "NVDA", "META", "TSLA", "^GSPC", "BTC-USD","ETH-USD", "SOL-USD"]
+
+
 @st.cache_data
 def get_yfinance_data(symbols: List):
 

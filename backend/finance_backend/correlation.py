@@ -6,10 +6,9 @@ from st_aggrid import AgGrid
 import streamlit as st
 import pandas as pd
 import numpy as np
-from main import get_yfinance_data
+from app import get_yfinance_data, WANTED_SYMBOLS
 
-wanted_symbols = ["AAPL", "MSFT", "NVDA", "META", "TSLA", "^GSPC", "BTC-USD","ETH-USD", "SOL-USD"]
-data_dict = get_yfinance_data(wanted_symbols)
+data_dict = get_yfinance_data(WANTED_SYMBOLS)
 
 st.title("Correlation and Autocorrelation Detection")
 
@@ -42,8 +41,8 @@ def find_correlation(symbol1: str, symbol2: str, timeframe: Optional[List] = Non
 
     
 #select assets and show correlation
-asset1 = st.selectbox("Asset1: ", wanted_symbols)
-new_symbols = wanted_symbols
+asset1 = st.selectbox("Asset1: ", WANTED_SYMBOLS)
+new_symbols = WANTED_SYMBOLS
 new_symbols.remove(asset1)
 asset2 = st.selectbox("Asset2: ", new_symbols)
 df, corr_matrix = find_correlation(asset1, asset2)
@@ -69,7 +68,7 @@ def find_autocorrelation(symbol: str, lag : int):
 
 
 #choose lag and symbol and find autocorrelation
-asset = st.selectbox("Asset:", wanted_symbols)
+asset = st.selectbox("Asset:", WANTED_SYMBOLS)
 lag = st.slider("Lag", 1, 365)
 
 df = find_autocorrelation(asset, lag)

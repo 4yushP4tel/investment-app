@@ -20,7 +20,17 @@ st.title("AI Model")
 def random_forest():
     pass
 
-def gemini_support():
+def gemini_pricing_support(asset, time_span):
+    """
+    This function will allow us to get values for the volatility and the drift
+    for some different assets. These values will be used in the GBM and Black-Scholes
+    models which will help us with predicting the asset price and to properly price 
+    options linked to this model
+    """
+    pass
+
+
+def gemini_support_stock_trading():
     sample_prompt = f"""
         you are a financial analyst who helps to predict the market regime for specific assets. You will help me predict the movement in price for different assets. This will be done on a price movement scale from -5 to 5. The movement of the price is said to be over a short period of time. Say a period of 1 to 2 weeks.
 
@@ -37,8 +47,7 @@ def gemini_support():
     """
     return sample_prompt
 
-this = gemini_support()
-this
+
 
 
 

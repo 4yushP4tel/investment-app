@@ -6,9 +6,7 @@ from st_aggrid import AgGrid
 import streamlit as st
 import pandas as pd
 import numpy as np
-from app import get_yfinance_data, WANTED_SYMBOLS
-
-data_dict = get_yfinance_data(WANTED_SYMBOLS)
+from app import WANTED_SYMBOLS, data_frame_dict as data_dict
 
 st.title("Correlation and Autocorrelation Detection")
 
@@ -42,7 +40,7 @@ def find_correlation(symbol1: str, symbol2: str, timeframe: Optional[List] = Non
     
 #select assets and show correlation
 asset1 = st.selectbox("Asset1: ", WANTED_SYMBOLS)
-new_symbols = WANTED_SYMBOLS
+new_symbols = WANTED_SYMBOLS[:]
 new_symbols.remove(asset1)
 asset2 = st.selectbox("Asset2: ", new_symbols)
 df, corr_matrix = find_correlation(asset1, asset2)

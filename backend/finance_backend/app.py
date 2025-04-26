@@ -24,11 +24,12 @@ def get_yfinance_data(symbols: List):
 
     return data_frame_dict
 
-
+data_frame_dict = get_yfinance_data(WANTED_SYMBOLS)
 visualizer = st.Page("visualizer.py", title="Visualizer", icon="📊")
 correlation = st.Page("correlation.py", title="Correlation", icon="📈")
 trader = st.Page("trade.py", title="Trader", icon="💰")
-ai_model = st.Page("ai_model.py", title="AI_model", icon="🤖")
+ai_model = st.Page("ai_model.py", title="AI Model", icon="🤖")
+options = st.Page("optionspage.py", title="Options Pricing", icon="📊")
 
-pages = st.navigation(pages=[visualizer, correlation, trader, ai_model])
+pages = st.navigation(pages=[visualizer, correlation, trader, ai_model, options])
 pages.run()

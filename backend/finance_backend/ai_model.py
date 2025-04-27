@@ -8,8 +8,10 @@ import streamlit as st
 from typing import List
 from app import get_yfinance_data, WANTED_SYMBOLS
 from google import genai
+from google.genai import types
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -38,7 +40,8 @@ def gemini_pricing_support():
         Using data from different new sources, find these variables for the following list of assets:
         ["AAPL", "MSFT", "NVDA", "META", "TSLA", "^GSPC", "BTC-USD","ETH-USD", "SOL-USD"]
 
-        Give me the variables in decimals and give me the result in a nested python dictionary
+        Give me the variables in decimals (positive or negative values are both possible) and give me 
+        the result in a nested python dictionary
         with the keys for each asset being its asset symbol and the key for the variables being
         drift and volatility.
         Find the results for me I do not want to know from where they come just make them for me
@@ -50,10 +53,23 @@ def gemini_pricing_support():
 
 
     response = client.models.generate_content(
-        model='Gemini-2.5 Pro' , contents=prompt
+        model='gemini-2.0-flash',
+        contents=prompt, 
+        config = types.GenerateContentConfig(
+            max_output_tokens=500,
+            temperature=0.05
+        )
     )
 
-    return response
+    # response_dict = json.loads(response.text)
+    string_reponse = response.text
+    cleaned_response = string_reponse.replace("\n", " ")
+    cleaned_response = cleaned_response.replace("\t", " ")
+    cleaned_response = cleaned_response.replace("python", "")
+    cleaned_response = cleaned_response.replace("```", "")
+    response_dict = json.loads(cleaned_response)
+    return response_dict
+
 
 def gemini_support_stock_trading():
     sample_prompt = f"""

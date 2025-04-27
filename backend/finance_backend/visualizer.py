@@ -1,6 +1,7 @@
 # from alpaca: get a select box of all the possible stocks and then 
 # make a df with the selected stocks and the date range and then plot it
 # could use cache to store recently used stocks
+from turtle import mode
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -13,7 +14,7 @@ st.title("Asset Visualizer")
 
 st.header("Historical Visualizer")
 symbol_selection = st.selectbox("Pick your asset", WANTED_SYMBOLS)
-plot = px.line(data_frame_dict[symbol_selection], x="Date", y="Close", labels={"Close": f"{symbol_selection} Price (USD)"})
+plot = px.line(data_frame_dict[symbol_selection], x="Date", y="Close", labels={"Close": f"{symbol_selection} Price (USD)"}, markers=True)
 st.plotly_chart(plot, use_container_width = True)
 
 st.header("Price Prediction Visualizer")
@@ -21,7 +22,8 @@ select = st.selectbox("Choose your asset", WANTED_SYMBOLS)
 df = data_frame_dict[select]
 price_model_df = expected_price_modelling(df=df)
 plot = px.line(price_model_df, x="Date", y="Price")
-st.plotly_chart(plot, True)
+plot.update_traces(mode="markers+lines")
+st.plotly_chart(plot, True, click_event = True)
 
 
 

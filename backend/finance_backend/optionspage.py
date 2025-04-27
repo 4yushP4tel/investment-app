@@ -4,6 +4,7 @@ from pricing.GBM import model_price
 from app import data_frame_dict, WANTED_SYMBOLS
 import streamlit as st
 import plotly.express as px
+from ai_model import gemini_pricing_support
 
 
 """
@@ -17,6 +18,8 @@ volatility for the asset price
 # get the first day and price on that day
 selection = st.selectbox("Choose your asset", WANTED_SYMBOLS)
 chosen_df = data_frame_dict[selection]
+gbm_var_dict = gemini_pricing_support()
+
 
 def expected_price_modelling(df):
     today_price = df.iloc[-1, 3]
@@ -27,5 +30,9 @@ def expected_price_modelling(df):
 
 price_model_df = expected_price_modelling(chosen_df)
 plot = px.line(price_model_df, x="Date", y="Price")
+
+st.header("Price Prediction Over One Year")
+st.button("Recompute Price Prediction")
 st.plotly_chart(plot, True)
+st.write(gbm_var_dict)
 

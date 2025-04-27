@@ -1,4 +1,5 @@
 from tracemalloc import start
+from turtle import mode
 from sklearn.linear_model import LogisticRegression
 import yfinance as yf
 import pandas as pd
@@ -7,6 +8,12 @@ import streamlit as st
 from typing import List
 from app import get_yfinance_data, WANTED_SYMBOLS
 from google import genai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 
 # build a random forest regression model to predict percentage change in the
@@ -20,15 +27,33 @@ st.title("AI Model")
 def random_forest():
     pass
 
-def gemini_pricing_support(asset, time_span):
-    """
-    This function will allow us to get values for the volatility and the drift
-    for some different assets. These values will be used in the GBM and Black-Scholes
-    models which will help us with predicting the asset price and to properly price 
-    options linked to this model
-    """
-    pass
 
+def gemini_pricing_support():
+
+    prompt = """
+        #Note all I want is a python dict of results, I do not want code, I do not want words explaining anything
+
+        You are a financial analyst who will help me with making price predictions.
+        You will help me find appropriate drift and volatility variables used in geometric brownian motion.
+        Using data from different new sources, find these variables for the following list of assets:
+        ["AAPL", "MSFT", "NVDA", "META", "TSLA", "^GSPC", "BTC-USD","ETH-USD", "SOL-USD"]
+
+        Give me the variables in decimals and give me the result in a nested python dictionary
+        with the keys for each asset being its asset symbol and the key for the variables being
+        drift and volatility.
+        Find the results for me I do not want to know from where they come just make them for me
+        Do not code this and do not show me the process of your thinking only give me the resulting dictionary
+        of values. Also note that I am using the GBM model over a period of 252 days which represents the amount of
+        trading days in the year
+    """
+        
+
+
+    response = client.models.generate_content(
+        model='Gemini-2.5 Pro' , contents=prompt
+    )
+
+    return response
 
 def gemini_support_stock_trading():
     sample_prompt = f"""

@@ -30,6 +30,7 @@ def random_forest():
     pass
 
 
+@st.cache_data
 def gemini_pricing_support():
 
     prompt = """

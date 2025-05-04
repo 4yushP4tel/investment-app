@@ -41,3 +41,9 @@ st.plotly_chart(plot, True)
 st.write(f"Expected Drift: {drift}")
 st.write(f"Expected Volatility: {volatility}")
 
+def price_option(expiry_date, asset, ):
+    """
+    
+    """
+    pass
+

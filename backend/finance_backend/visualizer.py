@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from typing import  List
 from app import WANTED_SYMBOLS, data_frame_dict
 from optionspage import expected_price_modelling
 
@@ -16,6 +15,21 @@ st.header("Historical Visualizer")
 symbol_selection = st.selectbox("Pick your asset", WANTED_SYMBOLS)
 plot = px.line(data_frame_dict[symbol_selection], x="Date", y="Close", labels={"Close": f"{symbol_selection} Price (USD)"}, markers=True)
 st.plotly_chart(plot, use_container_width = True)
+
+
+# View how using GBM differs from reality over a year starting from a certain date
+st.header(f"View the accuracy of using GBM over a year with {symbol_selection}")
+dates = data_frame_dict[symbol_selection]["Date"]
+gbm_data, drfit, volatility = expected_price_modelling(data_frame_dict[symbol_selection], symbol_selection)
+
+start_date = st.selectbox("Select a starting date", dates)
+gbm_data["Date"] = pd.to_datetime(gbm_data["Date"])
+gbm_data
+
+
+
+
+
 
 
 

@@ -26,9 +26,6 @@ def expected_price_modelling(df, selection):
     today_date = df.iloc[-1, -1]
     drift = asset_variable_dict[selection]["drift"]
     volatility = asset_variable_dict[selection]["volatility"]
-
-
-
     price_model_df = model_price(today_price, today_date, drift, volatility)
     return [price_model_df, drift, volatility]
 

@@ -1,17 +1,44 @@
-from tracemalloc import start
-from turtle import mode
-from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 import yfinance as yf
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 from typing import List
 from app import get_yfinance_data, WANTED_SYMBOLS
+import xgboost as xgb
+from xgboost import XGBClassifier, XGBRegressor
 from google import genai
 from google.genai import types
 import os
 from dotenv import load_dotenv
 import json
+
+"""
+use some twitter news and some data in the news to get a quantitative amount of 
+a certain parameter which I could use in an ML model
+"""
+
+class AI_Model:
+    """
+    This class will take some model, feed it data and then test the accuracy of the model
+    """
+    def __init__(self, model, data_df: pd.DataFrame):
+        self.model = model
+        self.data_df = data_df
+
+    def _test_accuracy(self):
+        pass
+
+    def _clean_data(self):
+        self.data_df.drop_na(inplace = True)
+
+    def _get_historical_data():
+        pass
+
+    def _get_info_from_news():
+        pass
+
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")

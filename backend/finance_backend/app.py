@@ -30,6 +30,7 @@ correlation = st.Page("correlation.py", title="Correlation", icon="📈")
 trader = st.Page("trade.py", title="Trader", icon="💰")
 ai_model = st.Page("ai_model.py", title="AI Model", icon="🤖")
 options = st.Page("optionspage.py", title="Options Pricing", icon="📊")
+regimes = st.Page("market_regimes", title="Market Regimes", icon="🐂🐻")
 
-pages = st.navigation(pages=[visualizer, correlation, trader, ai_model, options])
+pages = st.navigation(pages=[visualizer, correlation, trader, ai_model, options, regimes])
 pages.run()
